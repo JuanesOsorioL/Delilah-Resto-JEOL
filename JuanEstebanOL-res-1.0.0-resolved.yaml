@@ -1,0 +1,584 @@
+---
+openapi: 3.0.0
+info:
+  title: Delilah Resto
+  description: API para pedidos de comida deliciosa. Como cliente, podras registrarte, ver el listado de nuestros prodcutos y realizar una orden. Los administradores del restaurante tienen la posibilida de recibir pedidos y actualizarlos.
+  contact:
+    name: Juan Esteban Osorio Lopera
+    email: juanesosorio@outlook.com
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/JuanEstebanOL/res/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: http://localhost:3000
+  description: Servidor local
+tags:
+- name: Usuario
+  description: Usuarios registrados
+- name: Producto
+  description: Productos que se ofrecen
+- name: Pedido
+  description: cuando se toma una orden
+paths:
+  /NewUser:
+    post:
+      tags:
+      - Usuario
+      summary: Registrar Un Nuevo Usuario
+      parameters:
+      - name: Usuario
+        in: query
+        description: Permite crear usuarios en la base de datos
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/NewUser'
+      responses:
+        "200":
+          description: Successfull Usuario Ingresado
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Usuario Autenticado
+                  Token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6NCwiVXN1YXJpbyI6ImVkZ2FyIiwicGFzcyI6ImVkZ2FyNDU2IiwiUm9sIjoxLCJpYXQiOjE2MDQ1MTM0NTF9.aLvpKAAaHrbRPpKPq6ER2UlVpaIob91kesSbuE-F1MM
+        "400":
+          description: Error Usuario Ya Existe
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Username Invalido
+  /login:
+    post:
+      tags:
+      - Usuario
+      summary: Loguin De Un Usuario Ya Registrado
+      parameters:
+      - name: body
+        in: query
+        description: se necesita un objecto con Usurname y Password para validarlo en la base de datos
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Login'
+      responses:
+        "200":
+          description: Successfull usuario autenticado
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Usuario Autenticado
+                  Token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVXN1YXJpbyI6Imp1YW5lcyIsInBhc3MiOiJKVUFORVMxIiwiUm9sIjoiQWRtaW4iLCJpYXQiOjE2MDQ1OTcyNTN9.-xzVwHImp2vqMUzi7QGzgwzQNO15RLDruALIoK5XmI8
+        "400":
+          description: Error Usuario Ya Existe
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Username Ò Password Invalido
+  /R-User:
+    get:
+      tags:
+      - Usuario
+      summary: Mostrar los Usuarios registrados
+      description: Solo Administradores veran todos los usuarios registrados, los usuarios que entren a esta ruta solo veran sus datos.
+      responses:
+        "200":
+          description: Successfull
+          content:
+            appliocation/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    ID:
+                      type: integer
+                      example: 1
+                    Username:
+                      type: string
+                      example: juanes
+                    Fullname:
+                      type: string
+                      example: Juan Esteban Osorio Lopera
+                    Correo:
+                      type: string
+                      example: juan@hotmail
+                    Telefono:
+                      type: integer
+                      example: 1234567891
+                    Direccion:
+                      type: string
+                      example: calle 4
+                    Password:
+                      type: string
+                      example: JUANES1
+                    Rol:
+                      type: string
+                      example: Admin
+  /C-Producto:
+    post:
+      tags:
+      - Producto
+      summary: Registrar Un Nuevo Producto
+      parameters:
+      - name: body
+        in: query
+        description: se necesita un objecto con los datos basicos del producto para guardarlo
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/C-Producto'
+      responses:
+        "200":
+          description: Successfull
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Producto Guardado Correctamente
+        "400":
+          description: Error
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Nombre Del Producto Ya Esta Registrado
+  /R-Producto:
+    get:
+      tags:
+      - Producto
+      summary: Mostrar los Productos
+      description: No se necesita Parametros de ingreso
+      responses:
+        "200":
+          description: Successfull mostrar todos los productos guardados
+          content:
+            appliocation/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    ID:
+                      type: integer
+                      example: 4
+                    Nombre:
+                      type: string
+                      example: papas fritas
+                    Detalle:
+                      type: string
+                      example: papas, ensalada, gaseosa, carnes frias
+                    Img:
+                      type: string
+                      example: perro-Caliente
+                    Valor:
+                      type: integer
+                      example: 10000
+  /U-Producto:
+    put:
+      tags:
+      - Producto
+      summary: Actualizar un Producto
+      parameters:
+      - name: body
+        in: query
+        description: se necesita un objecto con los datos basicos del producto para actualizarlo
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/U-Producto'
+      responses:
+        "200":
+          description: Successfull
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Producto Actualizado Correctamente
+        "400":
+          description: Error
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Error  + error
+  /D-Producto:
+    delete:
+      tags:
+      - Producto
+      summary: Eliminar un Producto
+      parameters:
+      - name: body
+        in: query
+        description: se necesita un objecto con ID para eliminar el registro asociado.
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/D-Producto'
+      responses:
+        "200":
+          description: Successfull producto eliminado
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Producto Eliminado Correctamente
+        "400":
+          description: Error
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Error  + error
+  /C-Pedido:
+    post:
+      tags:
+      - Pedido
+      summary: Registrar Un Nuevo pedido
+      parameters:
+      - name: body
+        in: query
+        description: se necesita un objecto con los datos basicos del producto para guardarlo
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/C-Pedido'
+      responses:
+        "200":
+          description: Successfull Pedido guardado
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Se Ingreso Pedido Correctamente
+        "400":
+          description: Error Pedido no fue guardado
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: NO Se Ingreso Pedido
+  /R-Pedido:
+    get:
+      tags:
+      - Pedido
+      summary: Mostrar los Pedidos
+      description: No se necesita Parametros de ingreso
+      responses:
+        "200":
+          description: Successfull mostrar todos los pedidos guardados
+          content:
+            appliocation/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    ID_Pedido:
+                      type: integer
+                      example: 1
+                    Estado:
+                      type: string
+                      example: Nuevo
+                    Fecha:
+                      type: string
+                      example: 2020-11-02 00:18:00.00
+                    ID_Producto:
+                      type: integer
+                      example: 1
+                    Nombre:
+                      type: string
+                      example: papas fritas
+                    Detalle:
+                      type: string
+                      example: papas, ensalada, gaseosa, carnes frias
+                    Valor_Unitario:
+                      type: integer
+                      example: 15000
+                    Cantidad:
+                      type: integer
+                      example: 2
+                    Valor_Total:
+                      type: integer
+                      example: 30000
+                    Pago:
+                      type: string
+                      example: Efectivo
+  /U-Pedido:
+    put:
+      tags:
+      - Pedido
+      summary: Actualizar el estado de un Pedido
+      parameters:
+      - name: body
+        in: query
+        description: se necesita un objecto con los datos basicos del producto para actualizarlo con base al ID.
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/U-Pedido'
+      responses:
+        "200":
+          description: Successfull Actualizacion correcta
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Estado Actualizado Correctamente
+        "400":
+          description: Error Actualizacion
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Estado NO Fue Actualizado Ó ID NO Existe
+  /D-Pedido:
+    delete:
+      tags:
+      - Pedido
+      summary: Eliminar un Pedido
+      parameters:
+      - name: body
+        in: query
+        description: se necesita un objecto con ID para eliminar el registro asociado.
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/D-Pedido'
+      responses:
+        "200":
+          description: Successfull
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: Pedido Eliminado Correctamente
+        "400":
+          description: Error
+          content:
+            appliocation/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    example: NO Fue Eliminado PEDIDO
+components:
+  schemas:
+    Login:
+      required:
+      - Password
+      - Rol
+      - Username
+      type: object
+      properties:
+        Username:
+          type: string
+          example: estebano
+        Password:
+          type: string
+          example: ESTEBAN1
+    NewUser:
+      required:
+      - Correo
+      - Direccion
+      - Fullname
+      - Password
+      - Rol
+      - Telefono
+      - Username
+      type: object
+      properties:
+        Username:
+          type: string
+          example: edgar
+        Fullname:
+          type: string
+          example: edgar lopera
+        Correo:
+          type: string
+          example: edgar@hotmil
+        Telefono:
+          type: string
+          example: 524512536
+        Direccion:
+          type: string
+          example: calle 55-44
+        Password:
+          type: string
+          example: edgar456
+        Rol:
+          type: integer
+          example: 2
+    C-Producto:
+      required:
+      - Detalle
+      - Img
+      - Nombre
+      - Valor
+      type: object
+      properties:
+        Nombre:
+          type: string
+          example: picada
+        Detalle:
+          type: string
+          example: papas, ensalada, tocineta, gaseosa
+        Img:
+          type: string
+          example: picada
+        Valor:
+          type: integer
+          example: 150000
+    U-Producto:
+      required:
+      - Detalle
+      - ID
+      - Img
+      - Nombre
+      - Valor
+      type: object
+      properties:
+        ID:
+          type: integer
+          example: 2
+        Nombre:
+          type: string
+          example: perro caliente
+        Detalle:
+          type: string
+          example: pan, ensalada, gaseosa
+        Img:
+          type: string
+          example: perro-Caliente
+        Valor:
+          type: integer
+          example: 10000
+    D-Producto:
+      required:
+      - ID
+      type: object
+      properties:
+        ID:
+          type: integer
+          example: 2
+    C-Pedido:
+      required:
+      - Estado
+      - Fecha
+      - ID_Usuario
+      - Pago
+      - Total
+      type: object
+      properties:
+        Estado:
+          type: integer
+          example: 1
+        Total:
+          type: integer
+          example: 15000
+        Pago:
+          type: integer
+          example: 2
+        Fecha:
+          type: string
+          example: 2020-11-01T19:18:00.000Z
+        ID_Usuario:
+          type: integer
+          example: 3
+        Productos:
+          type: array
+          xml:
+            name: tag
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/C-Pedido-Productos'
+    C-Pedido-Productos:
+      required:
+      - Cantidad
+      - ID
+      type: object
+      properties:
+        ID:
+          type: integer
+          example: 1
+        Cantidad:
+          type: integer
+          example: 1
+    D-Pedido:
+      required:
+      - ID_Pedido
+      type: object
+      properties:
+        ID_Pedido:
+          type: integer
+          example: 4
+    U-Pedido:
+      required:
+      - Estado
+      - ID_Pedido
+      type: object
+      properties:
+        ID_Pedido:
+          type: integer
+          example: 2
+        Estado:
+          type: string
+          example: 2
