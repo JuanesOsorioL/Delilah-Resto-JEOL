@@ -1,0 +1,113 @@
+endpoint:localhost:3000/NewUser
+metodo:post
+json de consulta:{
+	 "Username":"juanes",
+    "Fullname":"edgar lopera",
+    "Correo":"edgar@hotmil",
+    "Telefono":"524512536",
+    "Direccion":"calle 55-44",
+    "Password":"edgar456",
+		"Rol":1
+}
+-------------------------------
+endpoint:localhost:3000/login
+metodo:post
+json de consulta:{
+	"Username":"juanes",
+	"Password":"JUANES1"
+}
+-----------------------------
+endpoint:localhost:3000/R-User
+metodo:get
+-----------------------------
+//////////endpoinst de producto///////////
+----------------------------
+endpoint:localhost:3000/C-Producto
+metodo:post
+json de consulta:{
+	 "Nombre":"picadaa",
+    "Detalle":"papas, ensalada, tocineta, gaseosa",
+    "Img":"picada",
+    "Valor":"150000"
+}
+****validaciones de administrador y usuario en el Header******
+new header: autenticacion
+new value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVXN1YXJpbyI6Imp1YW5lcyIsInBhc3MiOiJKVUFORVMxIiwiUm9sIjoiQWRtaW4iLCJpYXQiOjE2MDQ1MTMzNTJ9.Cyr4joqcnbRqBgo6GNwYOnQqSkt3JXP-Ic6KoozsPPY
+-----------------------------
+endpoint:localhost:3000/D-Producto
+metodo:delete
+json de consulta:{
+    "ID": 4
+}
+****validaciones de administrador y usuario en el Header******
+new header: autenticacion
+new value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVXN1YXJpbyI6Imp1YW5lcyIsInBhc3MiOiJKVUFORVMxIiwiUm9sIjoiQWRtaW4iLCJpYXQiOjE2MDQ1MTMzNTJ9.Cyr4joqcnbRqBgo6GNwYOnQqSkt3JXP-Ic6KoozsPPY
+-----------------------------
+endpoint:localhost:3000/R-Producto
+metodo:get
+json de consulta:
+------------------------------
+endpoint:localhost:3000/U-Producto
+metodo:put
+json de consulta:  {
+    "ID": 2,
+    "Nombre": "perro",
+    "Detalle": "papas, ensalada, gaseosa",
+    "Img": "perro",
+    "Valor": 10000
+  }
+****validaciones de administrador y usuario en el Header******
+new header: autenticacion
+new value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVXN1YXJpbyI6Imp1YW5lcyIsInBhc3MiOiJKVUFORVMxIiwiUm9sIjoiQWRtaW4iLCJpYXQiOjE2MDQ1MTMzNTJ9.Cyr4joqcnbRqBgo6GNwYOnQqSkt3JXP-Ic6KoozsPPY
+-----------------------------
+//////////endpoinst de pedido///////////
+----------------------------
+endpoint:localhost:3000/C-Pedido
+metodo:post
+json de consulta:{
+	 "Estado":1,
+    "Total":15000,
+    "Pago":2,
+	 "ID_Usuario":3,
+	"Productos":[
+		{
+			"ID":1,
+			"Cantidad":2
+		},
+		{
+			"ID":2,
+			"Cantidad":1
+		}
+	]
+}
+****validaciones de administrador y usuario en el Header******
+new header: autenticacion
+new value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVXN1YXJpbyI6Imp1YW5lcyIsInBhc3MiOiJKVUFORVMxIiwiUm9sIjoiQWRtaW4iLCJpYXQiOjE2MDQ1MTMzNTJ9.Cyr4joqcnbRqBgo6GNwYOnQqSkt3JXP-Ic6KoozsPPY
+-----------------------------
+endpoint:localhost:3000/D-Pedido
+metodo:delete
+json de consulta:  {
+    "ID_Pedido": 10
+	}
+****validaciones de administrador y usuario en el Header******
+new header: autenticacion
+new value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVXN1YXJpbyI6Imp1YW5lcyIsInBhc3MiOiJKVUFORVMxIiwiUm9sIjoiQWRtaW4iLCJpYXQiOjE2MDQ1MTMzNTJ9.Cyr4joqcnbRqBgo6GNwYOnQqSkt3JXP-Ic6KoozsPPY
+-----------------------------
+endpoint:localhost:3000/R-Pedido
+metodo:get
+json de consulta:
+****validaciones de administrador y usuario en el Header******
+new header: autenticacion
+new value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVXN1YXJpbyI6Imp1YW5lcyIsInBhc3MiOiJKVUFORVMxIiwiUm9sIjoiQWRtaW4iLCJpYXQiOjE2MDQ1MTMzNTJ9.Cyr4joqcnbRqBgo6GNwYOnQqSkt3JXP-Ic6KoozsPPY
+------------------------------
+endpoint:localhost:3000/U-Pedido
+metodo:put
+json de consulta: {
+    "ID_Pedido": 10,
+    "Estado":"4"
+}
+****validaciones de administrador y usuario en el Header******
+new header: autenticacion
+new value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVXN1YXJpbyI6Imp1YW5lcyIsInBhc3MiOiJKVUFORVMxIiwiUm9sIjoiQWRtaW4iLCJpYXQiOjE2MDQ1MTMzNTJ9.Cyr4joqcnbRqBgo6GNwYOnQqSkt3JXP-Ic6KoozsPPY
+-----------------------------
+
